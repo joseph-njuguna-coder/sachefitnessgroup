@@ -124,7 +124,7 @@ if ($preferred_date !== null) {
     );
 
     if (
-        !$date_check ||
+        !$date_check || 
         $date_check->format('Y-m-d') !== $preferred_date
     ) {
         echo "<script>

@@ -2,14 +2,14 @@
 
 include('dbcon.php');
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
 if (!isset($_GET['program_id']) || !is_numeric($_GET['program_id'])) {
     echo json_encode([
         'success' => false,
         'packages' => []
     ]);
-    exit();
+    exit;
 }
 
 $program_id = (int) $_GET['program_id'];
@@ -23,8 +23,24 @@ $stmt = mysqli_prepare(
      ORDER BY sort_order ASC, name ASC"
 );
 
+if (!$stmt) {
+    echo json_encode([
+        'success' => false,
+        'packages' => []
+    ]);
+    exit;
+}
+
 mysqli_stmt_bind_param($stmt, "i", $program_id);
-mysqli_stmt_execute($stmt);
+
+if (!mysqli_stmt_execute($stmt)) {
+    echo json_encode([
+        'success' => false,
+        'packages' => []
+    ]);
+    mysqli_stmt_close($stmt);
+    exit;
+}
 
 $result = mysqli_stmt_get_result($stmt);
 
@@ -48,3 +64,4 @@ echo json_encode([
 ]);
 
 mysqli_stmt_close($stmt);
+exit;
