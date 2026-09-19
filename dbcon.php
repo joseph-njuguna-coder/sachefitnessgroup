@@ -1,10 +1,14 @@
 <?php
-// Changed "localhost" to "127.0.0.1" to bypass local IPv6 resolution blocks
-$con = mysqli_connect("127.0.0.1","root","","gymnsb");
+// Retrieve database credentials from Render environment variables
+$host = getenv('DB_HOST') ?: "127.0.0.1";
+$user = getenv('DB_USER') ?: "root";
+$password = getenv('DB_PASS') ?: "";
+$database = getenv('DB_NAME') ?: "gymnsb";
+
+$con = mysqli_connect($host, $user, $password, $database);
 
 // Check connection
-if (mysqli_connect_errno())
-  {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-  }
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
 ?><!-- Visit codeastro.com for more projects -->
