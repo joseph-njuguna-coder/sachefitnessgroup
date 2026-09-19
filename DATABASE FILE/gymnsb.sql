@@ -369,3 +369,31 @@ ALTER TABLE `todo`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+--mark added
+CREATE TABLE IF NOT EXISTS divisions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    description TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS programs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    division_id INT NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    description TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (division_id) REFERENCES divisions(id) ON DELETE CASCADE
+);
+
+INSERT INTO divisions (name, description) VALUES 
+('Swim Club', 'Professional instruction from beginners to stroke mastery and water safety.'),
+('Corporate Wellness', 'Comprehensive fitness, nutrition, and mental well-being for teams and organizations.'),
+('Sache Kids', 'Empowering children and families through active participation and sports.');
+
+INSERT INTO programs (division_id, name, description) VALUES 
+(1, 'Beginner Swimming', 'Overcome water fear with gentle, step-by-step foundational instructions.'),
+(1, 'Stroke Mastery', 'Refine your freestyle, breaststroke, backstroke, and butterfly efficiency.'),
+(2, 'Team Building', 'Engaging group activities designed to boost team morale and synergy.');
